@@ -73,7 +73,19 @@ class TestConv2DgradWrtInputWeight(utt.InferShapeTester):
                                            filter_flip      = filter_flip)
             rval.name = 'conv2d_grad_wrt_inputs_output'
             return rval
+        
+        def sym_conv2d_grad_wrt_weights(output_grad, filters):
 
+            rval = conv2d_grad_wrt_weights(output_grad      = output_grad,
+                                           filters          = filters,
+                                           input_shape      = image_shape,
+                                           filter_shape     = filter_shape,
+                                           border_mode      = border_mode,
+                                           subsample        = subsample,
+                                           filter_flip      = filter_flip)
+            rval.name = 'conv2d_grad_wrt_weights_output'
+            return rval
+        
         # we create a symbolic function so that verify_grad can work
         def sym_conv2d(input, filters):
             # define theano graph and function
@@ -105,7 +117,8 @@ class TestConv2DgradWrtInputWeight(utt.InferShapeTester):
                 "ConvOp should have generated an error")
 
         if verify_grad:
-            utt.verify_grad(sym_conv2d_grad_wrt_inputs, [orig_image_data, filter_data])
+            utt.verify_grad(sym_conv2d_grad_wrt_inputs,  [orig_image_data, filter_data])
+            utt.verify_grad(sym_conv2d_grad_wrt_weights, [orig_image_data, filter_data])
     
     def test_basic1(self):
         """Tests that basic convolutions work for odd and even
