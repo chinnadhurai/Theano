@@ -12,8 +12,9 @@ from theano.tests.unittest_tools import attr
 from theano.tensor.nnet.abstract_conv import conv2d_grad_wrt_inputs, conv2d_grad_wrt_weights
 
 class TestConv2DgradWrtInputWeight(utt.InferShapeTester):
-    # This class contains tests for the legacy 2d convolution,
-    # but will also be inherited from for other implementations
+    # This class contains tests for the  conv2d_grad_wrt_inputs, 
+    # conv2d_grad_wrt_weights, but will also be inherited 
+    # from for other implementations
     mode = None
     dtype = theano.config.floatX
     # This will be set to the appropriate function in the inherited classes.
@@ -22,7 +23,7 @@ class TestConv2DgradWrtInputWeight(utt.InferShapeTester):
     conv2d = staticmethod(conv.conv2d)
 
     def setUp(self):
-        super(TestConv2D, self).setUp()
+        super(TestConv2DgradWrtInputWeight, self).setUp()
         self.input = T.tensor4('input', dtype=self.dtype)
         self.input.name = 'default_V'
         self.filters = T.tensor4('filters', dtype=self.dtype)
